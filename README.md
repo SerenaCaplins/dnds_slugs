@@ -1,7 +1,7 @@
 This is a set of scripts used to analyze transcriptomic data for signals of positive selection (dn/ds >1)
 
 # ID Orthogroups
-using the program orthofinder to find orthogroups
+using the program orthofinder to find orthogroups via `orthof.sh`
 
 
 # One-to-One orthologs R script
