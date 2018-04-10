@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -p RM
+#SBATCH -t 48:00:00
+#SBATCH -n 28
+#SBATCH --mail-user=sacaplins@ucdavis.edu
+#SBATCH --mail-type=ALL
+
+echo commands to stdout
+set -x
+
+
+export PATH=$PATH:/pylon5/bi4ifup/caplins/nt_trimmed_alignments/FastTree
+
+for filename in intermediatefiles/*
+
+do
+        cd /pylon5/bi4ifup/caplins/dnds_slugs/nt_trimmed_alignments/intermediatefiles/
+
+        base=$(basename $filename)
+
+        #go to the right starting place
+        cd ${base}
+
+        ../../FastTree -gtr ${base}.out.aa_ali.fasta  > ${base}tree_file
+
+done
