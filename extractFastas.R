@@ -75,25 +75,13 @@ lapply(fastaFiles, function(fastaFile){
 
 
 
-#test that we can make one of these fastas
-grpID<-"OG0000000"
 
-
-#problem. This only works if the fasta file names are the same in allSeqs and grps...who knew they could not be the same?
-
+#the fasta file names in the same in allSeqs and grps must be the same
 
 names(allSeqs)<-spcs #this fixed it, but might not be that replicatable
 
-#can pull out those this way:
-fastaGrp<-do.call( rbind, lapply(names(allSeqs), function(s){
-    allSeqs[[s]][ grps[[grpID,s]],]
-    }))
 
-#this writes it to your directory
-writeFasta(fastaGrp, "OG0000000.faa")
-
-
-#problem. only works on 1:1:1 orthogroups. THe above orthogroup has 200 some sequences for AWI and only the first per species are put in the file.
+#What we want to do only works on 1:1:1 orthogroups. We need to pull those out. We don't want to mess with paralogs anyways do we?
 #gives logical statment for those that are 1:1:1 and those that are not
 oners<-apply(grpSize==1,1,all)
 
@@ -103,13 +91,13 @@ head(OneTrue)
 
 #now we can try with our new groups list
 
-grpID<-"OG0008737"
+grpID<-rownames(OneTrue)[1]
 
 fastaOneTrue<-do.call( rbind, lapply(names(allSeqs), function(s){
   allSeqs[[s]][ OneTrue[[grpID,s]],]
 }))
 
-writeFasta(fastaOneTrue, "OG0008737.faa")
+writeFasta(fastaOneTrue, out.file = rownames(OneTrue)[1])
 
 
 #lets do a for loop to get the others
